@@ -1,1 +1,18 @@
+$v = Get-Volume C
+$p = ($v.SizeRemaining / $v.Size) * 100
+$f = "$HOME\Documents\Apkope.log"
+$t = Get-Date
 
+if ($p -lt 25) {
+    $pirms = (Get-Volume C).SizeRemaining
+    
+    Remove-Item $env:TEMP\* -Recurse -Force -ErrorAction SilentlyContinue
+    Clear-RecycleBin -Force -ErrorAction SilentlyContinue
+    
+    $pec = (Get-Volume C).SizeRemaining
+    $gb = ($pec - $pirms) / 1GB
+    
+    "[$t] Tīrīšana veikta. Atbrīvoti $gb GB." | Out-File $f -Append
+} else {
+    "[$t] Vieta pietiekama." | Out-File $f -Append
+}
