@@ -8,4 +8,3 @@
  $processMemoryUsage = Get-WmiObject WIN32_PROCESS | Sort-Object -Property ws -Descending | Select-Object -first 10 processname, processid, @{Name="Mem Usage(MB)";Expression={[math]::round($_.ws / 1mb)}}, CommandLine
  $processMemoryUsage | Out-GridView
 
-https://central.smarsh.com/s/article/How-to-get-memory-usage (Saite)
