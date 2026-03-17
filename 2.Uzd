@@ -1,1 +1,14 @@
-
+ $datums = (Get-Date).AddDays(-7)
+>> $kludas = @(Get-EventLog -LogName System -EntryType Error -After $datums)
+>> $fails = "$HOME\Documents\Errors.txt"
+>>
+>> if ($kludas.Count -gt 10) {
+>>     "[KRITISKI] Sistema ir nestabila!" | Out-File $fails
+>> } else {
+>>     "[OK] Kludu limenis normals." | Out-File $fails
+>> }
+>>
+>> foreach ($item in $kludas) {
+>>     $rinda = $item.TimeGenerated.ToString() + " " + $item.Message
+>>     $rinda | Out-File $fails -Append
+>> }
